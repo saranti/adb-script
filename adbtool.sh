@@ -1,6 +1,6 @@
 #!/bin/bash
 #adb script for Linux
-#Changelog:
+#Changelog: https://github.com/Art-Vanderlay/adb-script/blob/master/changelog
 #testing
 
 
