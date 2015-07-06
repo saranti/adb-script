@@ -1,0 +1,14 @@
+06/0715
+
+- added option to install phablet team repo & adb
+- added features:
+    install adb
+    adb shell
+    logcat
+    reboot
+    reboot recovery
+    reboot bootloader
+    install apk
+    quit
+    
+- cleaned up menu
