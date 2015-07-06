@@ -30,7 +30,11 @@ echo "            ||                9) reboot bootloader       ||"
 echo "            ||                                           ||"
 echo "            ||                10) install apk            ||"
 echo "            ||                                           ||"
-echo "            ||                11) quit                   ||"
+echo "            ||                11) unlock bootloader      ||"
+echo "            ||                                           ||"
+echo "            ||                12) take screenshot        ||"
+echo "            ||                                           ||"
+echo "            ||                13) quit                   ||"
 echo "            ||                                           ||"
 echo "              ==========================================="   
 echo ""
@@ -124,6 +128,16 @@ if [ $first -eq 10 ]
 fi
 
 if [ $first -eq 11 ]
-    then  exit
-    
+
+    then  adb devices
+    adb reboot bootloader
+    fastboot oem unlock
     fi      
+    
+if [ $first -eq 12 ]
+    then adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
+fi
+
+if [ $first -eq 13 ]
+    then exit
+fi
