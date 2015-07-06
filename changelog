@@ -10,5 +10,7 @@
     reboot bootloader
     install apk
     quit
+    unlock bootloader
+    take screenshot
     
 - cleaned up menu
