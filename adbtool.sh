@@ -1,38 +1,31 @@
-#!/bin/bash
-#adb script for Linux
-#Changelog:
-#testing
-
-
 clear
-echo ""
-echo "              ==========================================="
-echo "            ||                                           ||"
-echo "            ||               PICK AN OPTION              ||"
-echo "            ||                                           ||"
-echo "            ||                1) install adb             ||"
-echo "            ||                                           ||"
-echo "            ||                2) adb pull                ||"
-echo "            ||                                           ||"
-echo "            ||                3) adb push                ||"
-echo "            ||                                           ||"
-echo "            ||                4) adb sideload            ||"
-echo "            ||                                           ||"
-echo "            ||                5) adb shell               ||"
-echo "            ||                                           ||"
-echo "            ||                6) logcat                  ||"
-echo "            ||                                           ||"
-echo "            ||                7) reboot                  ||"
-echo "            ||                                           ||"
-echo "            ||                8) reboot recovery         ||"
-echo "            ||                                           ||"
-echo "            ||                9) reboot bootloader       ||"
-echo "            ||                                           ||"
-echo "            ||                10) install apk            ||"
-echo "            ||                                           ||"
-echo "            ||                11) quit                   ||"
-echo "            ||                                           ||"
-echo "              ==========================================="   
+echo "       ========================================================================"
+echo "      ||                                                                      ||"
+echo "      ||                               ADB TOOL                               ||"
+echo "      ||                                                                      ||"
+echo "      ||======================================================================||"
+echo "      ||                                                                      ||"
+echo "      ||                         CHOOSE FROM THE MENU                         ||"
+echo "      ||                                                                      ||"
+echo "      ||                                                                      ||"
+echo "      ||      1) install adb & fastboot            8) reboot recovery         ||"
+echo "      ||                                                                      ||"
+echo "      ||      2) adb pull                          9) reboot bootloader       ||"
+echo "      ||                                                                      ||"
+echo "      ||      3) adb push                          10) install apk            ||"
+echo "      ||                                                                      ||"
+echo "      ||      4) adb sideload                      11) unlock bootloader      ||"
+echo "      ||                                                                      ||"
+echo "      ||      5) adb shell                         12) take screenshot        ||"
+echo "      ||                                                                      ||"
+echo "      ||      6) take logcat                       13) factory reset          ||"
+echo "      ||                                                                      ||"
+echo "      ||      7) reboot                            14) quit                   ||"
+echo "      ||                                                                      ||"
+echo "      ||                                                                      ||"
+echo "      ||                                                                      ||"
+echo "      ||                                                                      ||"
+echo "        ======================================================================"   
 echo ""
 
 read first
@@ -124,6 +117,31 @@ if [ $first -eq 10 ]
 fi
 
 if [ $first -eq 11 ]
-    then  exit
-    
+
+    then  adb devices
+    adb reboot bootloader
+    fastboot oem unlock
     fi      
+    
+if [ $first -eq 12 ]
+    then adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
+fi
+
+if [ $first -eq 13 ]
+    
+    then echo "This action cannot be undone. Are you sure you want to continue? [y/n]"
+    read input
+    case $input in
+
+    [yY]* ) adb shell
+                recovery --wipe_data;;
+    
+    [nN]* ) exit;;
+    
+    * ) echo "please enter again";;
+    esac
+fi
+
+if [ $first -eq 14 ]
+    then exit
+fi
