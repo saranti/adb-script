@@ -5,35 +5,47 @@
 
 
 clear
-echo "             _____________________________________________"
+echo ""
+echo "              ==========================================="
 echo "            ||                                           ||"
 echo "            ||               PICK AN OPTION              ||"
 echo "            ||                                           ||"
-echo "            ||                 1) adb pull               ||"
+echo "            ||                1) install adb             ||"
 echo "            ||                                           ||"
-echo "            ||                2) adb push                ||"
-echo "            |                                             |"
-echo "            |                3) adb sideload              |"
-echo "            |                                             |"
-echo "            |                4) adb shell                 |"
-echo "            |                                             |"
-echo "            |                5) logcat                    |"
-echo "            |                                             |"
-echo "            |                6) reboot                    |"
-echo "            |                                             |"
-echo "            |                7) reboot recovery           |"
-echo "            |                                             |"
-echo "            |                8) reboot bootloader         |"
-echo "            |                9) install apk               |"
-echo "            |                                             |"
-echo "            |                10) quit                     |"
-echo "            |                                             |"
-echo "            |_____________________________________________|"   
-
+echo "            ||                2) adb pull                ||"
+echo "            ||                                           ||"
+echo "            ||                3) adb push                ||"
+echo "            ||                                           ||"
+echo "            ||                4) adb sideload            ||"
+echo "            ||                                           ||"
+echo "            ||                5) adb shell               ||"
+echo "            ||                                           ||"
+echo "            ||                6) logcat                  ||"
+echo "            ||                                           ||"
+echo "            ||                7) reboot                  ||"
+echo "            ||                                           ||"
+echo "            ||                8) reboot recovery         ||"
+echo "            ||                                           ||"
+echo "            ||                9) reboot bootloader       ||"
+echo "            ||                                           ||"
+echo "            ||                10) install apk            ||"
+echo "            ||                                           ||"
+echo "            ||                11) quit                   ||"
+echo "            ||                                           ||"
+echo "              ==========================================="   
+echo ""
 
 read first
 
 if [ $first -eq 1 ]
+
+    then sudo add-apt-repository ppa:phablet-team/tools && sudo apt-get update
+    wait
+    sudo apt-get install android-tools-adb android-tools-fastboot
+    
+fi
+    
+if [ $first -eq 2 ]
  
     then echo "Enter the file path"
     echo      "Example: /sdcard/Pictures/file.png"
@@ -45,7 +57,7 @@ if [ $first -eq 1 ]
     fi
 fi
 
-if [ $first -eq 2 ]
+if [ $first -eq 3 ]
 
     then echo "Enter the file path"
     echo      "Example: $HOME/Desktop/file.txt"
@@ -57,7 +69,7 @@ if [ $first -eq 2 ]
    fi
 fi
 
-if [ $first -eq 3 ]
+if [ $first -eq 4 ]
     then echo "Enter the file path"
     echo      "Example: $HOME/Desktop/file.txt"
     read input
@@ -68,38 +80,38 @@ if [ $first -eq 3 ]
     fi
 fi
     
-if [ $first -eq 4 ]
+if [ $first -eq 5 ]
 
     then adb devices
     adb shell
     fi
 
-if [ $first -eq 5 ]
+if [ $first -eq 6 ]
     then
     adb devices
     adb logcat
        
     fi   
     
-if [ $first -eq 6 ]
+if [ $first -eq 7 ]
     then
     adb devices
     adb reboot
     fi    
     
-if [ $first -eq 7 ]
+if [ $first -eq 8 ]
     then
     adb devices
     adb reboot recovery
     fi        
     
-if [ $first -eq 8 ]
+if [ $first -eq 9 ]
     then
     adb devices
     adb reboot bootloader
     fi        
     
-if [ $first -eq 9 ]
+if [ $first -eq 10 ]
 
     then echo "Enter the app's file path"
     echo      "Example: $HOME/Desktop/file.apk"
@@ -111,7 +123,7 @@ if [ $first -eq 9 ]
    fi
 fi
 
-if [ $first -eq 10 ]
+if [ $first -eq 11 ]
     then  exit
     
     fi      
