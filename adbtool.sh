@@ -1,3 +1,9 @@
+#!/bin/bash
+#adb script for Linux
+#Changelog: https://github.com/Art-Vanderlay/adb-script/blob/master/changelog
+#testing
+
+
 clear
 echo "       ===================================================================="
 echo "      ||                                                                  ||"
