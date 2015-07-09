@@ -144,9 +144,11 @@ fi
     
 if [ $first -eq 12 ]
     then adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
-    echo ""
-    echo "Your image is located in $HOME and is named 'screen.png'"
-    echo ""
+        if [ -f $HOME/Desktop/screen.png ]; then
+           echo ""
+             echo "Your image is located in $HOME and is named 'screen.png'"
+                echo ""
+    fi
 fi
 
 if [ $first -eq 13 ]
@@ -210,5 +212,5 @@ EOF
 fi
 
 if [ -f /tmp/android.rules ]; then
-sudo cp /tmp/android.rules /etc/udev/rules.d/51-android.rules;sudo chmod 644   /etc/udev/rules.d/51-android.rules;sudo chown root. /etc/udev/rules.d/51-android.rules;sudo service udev restart;sudo killall adb;
+sudo cp /tmp/android.rules /etc/udev/rules.d/51-android.rules;sudo chmod 644   /etc/udev/rules.d/51-android.rules;sudo chown root. /etc/udev/rules.d/51-android.rules;sudo service udev restart;sudo killall adb;echo "";echo "Please disconnect and then reconnect your device to use adb.";echo "";
 fi
