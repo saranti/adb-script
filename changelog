@@ -19,3 +19,6 @@
 09/07/15
 
 - added option 15: configure udev rules
+- added conditional to check if screenshot is there before displaying success message
+- added message to be displayed on option 15
+- cleaned up menu
