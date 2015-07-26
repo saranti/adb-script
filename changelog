@@ -22,3 +22,10 @@
 - added conditional to check if screenshot is there before displaying success message
 - added message to be displayed on option 15
 - cleaned up menu
+
+26/07/15
+
+-Changed script layout:
+    Replaced all conditionals with case
+    added restart loop
+    
