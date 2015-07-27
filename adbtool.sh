@@ -5,30 +5,22 @@
 
 
 
-
-
-
 inst() {  sudo add-apt-repository ppa:phablet-team/tools && sudo apt-get update
         wait
         sudo apt-get install android-tools-adb android-tools-fastboot
 }
-    
-
-    
-
  
 pull() {  echo "Enter the file path"
-        echo      "Example: /sdcard/Pictures/file.png"
-        read input
-        adb devices
-        adb pull "$input" /$HOME/Desktop
+          echo      "Example: /sdcard/Pictures/file.png"
+          read input
+          adb devices
+          adb pull "$input" /$HOME/Desktop
     if [ "$?" -ne "0" ] ; then
         echo "Error while pulling $first"
         sleep 3s
     
 fi
 }
-
 
 push() {  echo "Enter the file path"
         echo      "Example: $HOME/Desktop/file.txt"
@@ -36,12 +28,11 @@ push() {  echo "Enter the file path"
         adb devices
         adb push "$input" /sdcard/
     if [ "$?" -ne "0" ] ; then
-        echo "Error while pulling $first"
+        echo "Error while pushing $first"
         sleep 3s
    
 fi
 }
-
 
 side() {  echo "Enter the file path"
          echo      "Example: $HOME/Desktop/file.txt"
@@ -51,58 +42,40 @@ side() {  echo "Enter the file path"
       if [ "$?" -ne "0" ] ; then
         echo "Error while sideloading"
         sleep 3s
-    
 fi
 }
     
-
-
 shell() {   adb devices
-          adb shell
-    
+          adb shell   
 }
-
-
-   
+ 
 log() {   adb devices
           adb logcat
-       
-
 } 
- 
-    
+  
 reb() {   adb devices
           adb reboot
-
 }    
     
-
 rec() {   adb devices
     adb reboot recovery
-
 }        
     
-
 boot() {   adb devices
     adb reboot bootloader
-
 }        
     
-
-
 app() {   echo "Enter the app's file path"
           echo      "Example: $HOME/Desktop/file.apk"
           read input
              adb devices
              adb install "$input" 
         if [ "$?" -ne "0" ] ; then
-             echo "Error while installing $first"
+             echo "Error while installing $first"  
              sleep 3s
-  
 fi
 }
 
-#Not working ??
 oemu() {   echo "This action will unlock your bootloader."
           echo "All your data will be erased and your warranty may be void."
           echo "Are you sure you want to continue? [y/n]"
@@ -115,36 +88,39 @@ oemu() {   echo "This action will unlock your bootloader."
                 wait
                   fastboot oem unlock
               echo "Done";;
+             
 
     [nN]* ) exit;;
     
     * ) echo "please enter again";;
+    
     esac
 
 }      
-#Not working    
-scrn() {     adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
+    
+scrn() {   adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > /$HOME/Desktop/screen.png
              if [ -f $HOME/Desktop/screen.png ]; then
            echo ""
-             echo "Your image is located in $HOME and is named 'screen.png'"
+             echo "Your image is located in $HOME/Desktop and is named 'screen.png'"
                 echo ""
+                sleep 3s
     
 fi
 }
-#Not working - adb shell cancels script
+
 fact() {   echo "All your data will be erased." 
-          echo "This action cannot be undone."
-          echo "Are you sure you want to continue? [y/n]"
-          read input
-          case $input in
+           echo "This action cannot be undone."
+           echo "Are you sure you want to continue? [y/n]"
+           read input
+           case $input in
 
     [yY]* ) adb devices
-                adb shell
-                  recovery --wipe_data;;
+                adb shell recovery --wipe_data;;
     
     [nN]* ) exit;;
     
     * ) echo "please enter again";;
+    
     esac
 }
 
@@ -190,7 +166,7 @@ EOF
 
 
 if [ -f /tmp/android.rules ]; then
-sudo cp /tmp/android.rules /etc/udev/rules.d/51-android.rules;sudo chmod 644   /etc/udev/rules.d/51-android.rules;sudo chown root. /etc/udev/rules.d/51-android.rules;sudo service udev restart;sudo killall adb;rm /tmp/android.rules; echo "";echo "Please disconnect and then reconnect your device to use adb.";echo "";sleep 5s;
+sudo cp /tmp/android.rules /etc/udev/rules.d/51-android.rules;sudo chmod 644   /etc/udev/rules.d/51-android.rules;sudo chown root. /etc/udev/rules.d/51-android.rules;sudo service udev restart;sudo killall adb;rm /tmp/android.rules; echo "";echo "Please disconnect and then reconnect your device to use adb.";echo "";sleep 4s;
 fi
 
 }
@@ -208,7 +184,7 @@ echo "      ||                                                                  
 echo "      ||                         CHOOSE FROM THE MENU                     ||"
 echo "      ||                                                                  ||"
 echo "      ||                                                                  ||"
-echo "      ||   1) install adb & fastboot           9) reboot bootloader       ||"
+echo "      ||   1) install adb & fastboot            9) reboot bootloader      ||"
 echo "      ||                                                                  ||"
 echo "      ||   2) adb pull                         10) install apk            ||"
 echo "      ||                                                                  ||"
@@ -216,20 +192,20 @@ echo "      ||   3) adb push                         11) unlock bootloader      
 echo "      ||                                                                  ||"
 echo "      ||   4) adb sideload                     12) take screenshot        ||"
 echo "      ||                                                                  ||"
-echo "      ||   5) adb shell                        13) factory reset          ||"
+echo "      ||   5) adb shell                        13)  configure udev rules  ||"
+echo "      ||                                            (for no permissions   ||"
+echo "      ||   6) take logcat                           error)                ||"
 echo "      ||                                                                  ||"
-echo "      ||   6) take logcat                      14) quit                   ||"
+echo "      ||   7) reboot                            q) quit                   ||"
 echo "      ||                                                                  ||"
-echo "      ||   7) reboot                           15) configure udev rules   ||"
-echo "      ||                                           (for no permissions    ||"
-echo "      ||   8) reboot recovery                      error)                 ||"
+echo "      ||   8) reboot recovery                                             ||"
 echo "      ||                                                                  ||"
 echo "       ===================================================================="   
 echo ""
 
 read first
 
-	case "$first" in
+	case "$first" in       
 	
 		 1)    inst ;;
 		 2)    pull ;;
@@ -243,9 +219,8 @@ read first
 	    10)    app ;;
 	    11)    boot ;;
 	    12)    scrn ;;
-	    13)    fact ;;
-	    14)    ex ;;
-	    15)    udev ;;
+	    13)    udev ;;
+	     q)    ex ;;
 	     *)
 			echo "Unknown command: '$first'"
         ;;
