@@ -29,3 +29,10 @@
     Replaced all conditionals with case
     added restart loop
     
+27/07/15
+-removed factory reset option
+-changed quit number to q
+-changed udev rules to option 13
+-fixed screenshot command
+-various fixes & clean ups
+    
