@@ -24,6 +24,7 @@ pull() {  echo "Enter the file path"
         adb pull "$input" /$HOME/Desktop
     if [ "$?" -ne "0" ] ; then
         echo "Error while pulling $first"
+        sleep 3s
     
 fi
 }
@@ -36,6 +37,7 @@ push() {  echo "Enter the file path"
         adb push "$input" /sdcard/
     if [ "$?" -ne "0" ] ; then
         echo "Error while pulling $first"
+        sleep 3s
    
 fi
 }
@@ -48,6 +50,7 @@ side() {  echo "Enter the file path"
           adb sideload "$input"
       if [ "$?" -ne "0" ] ; then
         echo "Error while sideloading"
+        sleep 3s
     
 fi
 }
@@ -94,11 +97,12 @@ app() {   echo "Enter the app's file path"
              adb install "$input" 
         if [ "$?" -ne "0" ] ; then
              echo "Error while installing $first"
+             sleep 3s
   
 fi
 }
 
-
+#Not working ??
 oemu() {   echo "This action will unlock your bootloader."
           echo "All your data will be erased and your warranty may be void."
           echo "Are you sure you want to continue? [y/n]"
@@ -118,7 +122,7 @@ oemu() {   echo "This action will unlock your bootloader."
     esac
 
 }      
-    
+#Not working    
 scrn() {     adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
              if [ -f $HOME/Desktop/screen.png ]; then
            echo ""
@@ -127,7 +131,7 @@ scrn() {     adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > screen.png
     
 fi
 }
-
+#Not working - adb shell cancels script
 fact() {   echo "All your data will be erased." 
           echo "This action cannot be undone."
           echo "Are you sure you want to continue? [y/n]"
@@ -186,7 +190,7 @@ EOF
 
 
 if [ -f /tmp/android.rules ]; then
-sudo cp /tmp/android.rules /etc/udev/rules.d/51-android.rules;sudo chmod 644   /etc/udev/rules.d/51-android.rules;sudo chown root. /etc/udev/rules.d/51-android.rules;sudo service udev restart;sudo killall adb;rm /tmp/android.rules; echo "";echo "Please disconnect and then reconnect your device to use adb.";echo "";sleep 7s;
+sudo cp /tmp/android.rules /etc/udev/rules.d/51-android.rules;sudo chmod 644   /etc/udev/rules.d/51-android.rules;sudo chown root. /etc/udev/rules.d/51-android.rules;sudo service udev restart;sudo killall adb;rm /tmp/android.rules; echo "";echo "Please disconnect and then reconnect your device to use adb.";echo "";sleep 5s;
 fi
 
 }
