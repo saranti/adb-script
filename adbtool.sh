@@ -108,25 +108,8 @@ scrn() {   adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > /$HOME/Deskto
 fi
 }
 
-fact() {   echo "All your data will be erased." 
-           echo "This action cannot be undone."
-           echo "Are you sure you want to continue? [y/n]"
-           read input
-           case $input in
-
-    [yY]* ) adb devices
-                adb shell recovery --wipe_data;;
-    
-    [nN]* ) exit;;
-    
-    * ) echo "please enter again";;
-    
-    esac
-}
-
 ex() {  exit
 }
-
 
 
 udev() {    cat >/tmp/android.rules << "EOF"
@@ -217,7 +200,7 @@ read first
 		 8)    rec ;;
 		 9)    boot ;;
 	    10)    app ;;
-	    11)    boot ;;
+	    11)    oemu ;;
 	    12)    scrn ;;
 	    13)    udev ;;
 	     q)    ex ;;
