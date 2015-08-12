@@ -9,7 +9,11 @@ inst() { if egrep -qi "ubuntu|debian|mint" /proc/version; then
      
           if grep -qi "suse" /proc/version; then
           	sudo zypper install android-tools 	
-     fi				
+     fi	
+     
+     	#  if grep -qi "slackware|slax|slack" /proc/version; then
+          	
+   #  fi		
 
           if egrep -qi "mint|linuxmint" /proc/version; then
              sudo apt-get install libncurses5:i386
@@ -176,6 +180,13 @@ scrn() {   adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > /$HOME/Deskto
     fi
 }
 
+recd() { adb shell screenrecord /sdcard/scrRecord.mp4
+	    echo ""
+	    echo "Recording in progress. Press Ctrl and c to stop"
+	    echo ""
+	    echo "The file will be saved in /sdcard/scrRecord.mp4"
+}
+
 ex() {  exit
 }
 
@@ -195,17 +206,17 @@ echo "         1) install adb & fastboot           8) reboot recovery         "
 echo "                                                                        "
 echo "         2) adb pull                         9) reboot bootloader       "
 echo "                                                                        "
-echo "         3) adb push                         10) exit fastboot mode     "
+echo "         3) adb push                         10) install apk            "
 echo "                                                                        "
-echo "         4) adb sideload                     11) install apk            "
+echo "         4) adb sideload                     11) unlock bootloader      "
 echo "                                                                        "
-echo "         5) adb shell                        12) unlock bootloader      "
+echo "         5) adb shell                        12) exit fastboot mode     "
 echo "                                                                        "
 echo "         6) take logcat                      13) take screenshot        "
 echo "                                                                        "
-echo "         7) reboot                            q) exit                   "
+echo "         7) reboot                           14) record screen          "
 echo "                                                                        "
-echo "                                                                        "
+echo "                                              q) exit                   "
 echo "        ______________________________________________________________"   
 echo ""
 
@@ -226,6 +237,7 @@ read first
 	    11)    oemu ;;
 	    12)    exb ;;
 	    13)    scrn;;
+	    14)	   recd ;;
 	     q)    ex ;;
 	     *)
 			echo "Unknown command: '$first'"
