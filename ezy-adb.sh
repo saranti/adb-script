@@ -90,7 +90,7 @@ push() {  echo "Enter the file path"
         echo      "Example: $HOME/Desktop/file.txt"
         read input
         adb devices
-        adb push "$input" /sdcard/
+        adb push "$input" /sdcard
     if [ "$?" -ne "0" ] ; then
         echo "Error while pushing $first"
         sleep 3s
