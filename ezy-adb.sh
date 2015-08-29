@@ -9,25 +9,16 @@ inst() { if egrep -qi "ubuntu|debian|mint" /proc/version; then
      
           if grep -qi "suse" /proc/version; then
           	sudo zypper install android-tools 	
-     fi	
+     fi
      
-     	#  if grep -qi "slackware|slax|slack" /proc/version; then
-          	
-   #  fi		
-
           if egrep -qi "mint|linuxmint" /proc/version; then
              sudo apt-get install libncurses5:i386
      fi
  
-          if egrep -qi "redhat|centos" /proc/version; then
-             wget http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-             sudo rpm -Uvh epel-release-6*.rpm
-     fi
-           
           if egrep -qi "redhat|fedora|centos" /proc/version; then
 		     sudo yum install epel-release
 		     wait
-           	 sudo yum install android-tools
+           	     sudo yum install android-tools
 
      fi
 
@@ -77,7 +68,6 @@ fi
 pull() {  echo "Enter the file path"
           echo      "Example: /sdcard/Pictures/file.png"
           read input
-          adb devices
           adb pull "$input" /$HOME/Desktop
     if [ "$?" -ne "0" ] ; then
         echo "Error while pulling $first"
@@ -89,7 +79,6 @@ pull() {  echo "Enter the file path"
 push() {  echo "Enter the file path"
         echo      "Example: $HOME/Desktop/file.txt"
         read input
-        adb devices
         adb push "$input" /sdcard
     if [ "$?" -ne "0" ] ; then
         echo "Error while pushing $first"
@@ -101,7 +90,6 @@ push() {  echo "Enter the file path"
 side() {  echo "Enter the file path"
          echo      "Example: $HOME/Desktop/file.txt"
          read input
-          adb devices
           adb sideload "$input"
       if [ "$?" -ne "0" ] ; then
         echo "Error while sideloading"
@@ -113,26 +101,21 @@ shell() { adb devices
           adb shell   
 }
  
-log() {   adb devices
-          adb logcat
+log() {  adb logcat
 } 
   
-reb() {   adb devices
-          adb reboot
+reb() {   adb reboot
 }    
     
-rec() {   adb devices
-    adb reboot recovery
+rec() {   adb reboot recovery
 }        
     
-boot() {   adb devices
-    adb reboot bootloader
+boot() {   adb reboot bootloader
 }        
     
 app() {   echo "Enter the app's file path"
           echo      "Example: $HOME/Desktop/file.apk"
           read input
-             adb devices
              adb install "$input" 
         if [ "$?" -ne "0" ] ; then
              echo "Error while installing $first"  
@@ -147,8 +130,7 @@ oemu() {  echo "This action will unlock your bootloader."
     read input
     case $input in
 
-    [yY]* ) adb devices
-                adb reboot bootloader
+    [yY]* ) adb reboot bootloader
                 echo "Waiting for fastboot device..."
                 sleep 6s
                   fastboot devices
