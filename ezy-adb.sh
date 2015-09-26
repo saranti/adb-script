@@ -7,6 +7,10 @@ inst() { if egrep -qi "ubuntu|debian|mint" /proc/version; then
 	    sudo apt-get install android-tools-adb android-tools-fastboot
          fi
 
+	 if egrep -qi "suse|opensuse" /proc/version; then
+            sudo zypper install android-tools
+         fi
+
          if egrep -qi "mint|linuxmint" /proc/version; then
             sudo apt-get install libncurses5:i386
          fi
@@ -18,7 +22,7 @@ inst() { if egrep -qi "ubuntu|debian|mint" /proc/version; then
          fi
 
 	 echo ""
-	 echo "Configure udev rules? (recommended)"
+	 echo "Configure udev rules? (recommended) [y/n]"
 
 	 read sto
 	     case "$sto" in
