@@ -1,34 +1,114 @@
 #!/bin/bash
-#Ezy-Adb by Tom Sarantis (Art-Vanderlay)
-#testing
+#Ezy-Adb by Art-Vanderlay
+#
 
+
+restart() {
+clear
+printf '\e[8;45;90t'
+echo ""
+echo ""
+echo ""
+echo "                       EZY-ADB "
+echo "__________________________________________________________"
+echo ""
+echo "                 CHOOSE FROM THE MENU"
+echo ""
+echo "__________________________________________________________"
+echo ""
+echo "		1) install adb & fastboot"
+echo "		2) check connection"
+echo ""
+echo "		3) adb pull"
+echo "		4) adb push"
+echo "		5) adb sideload"
+echo "		6) adb shell"
+echo ""
+echo "		7) take logcat"
+echo "		8) Dump log to file"
+echo ""
+echo "		9) reboot"
+echo "		10) reboot recovery"
+echo "		11) reboot bootloader"  
+echo ""
+echo "		12) install apk"
+echo ""
+echo "		13) unlock bootloader" 
+echo ""
+echo "		14) backup sdcard"
+echo "		15) restore sdcard backup"
+echo ""
+echo "		16) take screenshot"
+echo "		17) record screen"
+echo ""
+echo "		18) configure udev rules seperately"
+echo ""
+echo "		19) useful links & info"
+echo ""
+echo "		q) quit"
+echo "__________________________________________________________"
+echo ""
+echo ""
+echo ""
+
+read first
+
+	case "$first" in
+
+		 1)    inst ;;
+		 2)    chadb ;;
+		 3)    pull ;;
+		 4)    push ;;
+		 5)    side ;;
+		 6)    shell ;;
+		 7)    log ;;
+		 8)    ldump ;;
+		 9)    reb ;;
+		 10)   rec ;;
+	    	 11)   boot ;;
+	         12)   app ;;
+	         13)   oemu ;;
+		 14)   sdbak ;;
+		 15)   rest ;;
+	  	 16)   scrn ;;
+	         17)   recd ;;
+	         18)   udev ;;
+	         19)   stuff ;;
+	         q)    ex ;;
+	  	 *)
+			echo "Unknown command: '$first'"
+        ;;
+	esac
+}
 
 inst() { if egrep -qi "ubuntu|debian|mint" /proc/version; then
 	    sudo apt-get install android-tools-adb android-tools-fastboot
          fi
 
-	 if egrep -qi "suse|opensuse" /proc/version; then
-            sudo zypper install android-tools
-         fi
-
          if egrep -qi "mint|linuxmint" /proc/version; then
             sudo apt-get install libncurses5:i386
+	 fi
+
+         if egrep -qi "suse|opensuse" /proc/version; then
+            sudo zypper install android-tools
+
+         elif egrep -qi "redhat|centos" /proc/version; then
+	    sudo yum install epel-release
+	    sudo yum install android-tools
          fi
 
-         if egrep -qi "redhat|fedora|centos" /proc/version; then
-	    sudo yum install epel-release
-	    wait
-            sudo yum install android-tools
-         fi
+	 if egrep -qi "fedora" /proc/version; then
+	    sudo dnf install android-tools
+	 fi
 
 	 echo ""
-	 echo "Configure udev rules? (recommended) [y/n]"
+	 echo "Configure udev rules? [y/n] (recommended)"
 
 	 read sto
 	     case "$sto" in
 
 	        [yY]* ) udev ;;
-                [nN]* ) exit;;
+                [nN]* ) restart ;;
                     * ) echo "please enter again";;
 	     esac	
 }
@@ -79,13 +159,15 @@ echo "Please disconnect and then reconnect your device to use adb.";echo "";slee
 }
 
 chadb() { echo ""
+	  adb devices
+	  echo ""
 	  echo "Connection mode:"
- adb get-state
-	  sleep 3s
+ 	  adb get-state
+	  sleep 4s
 }
 
 pull() {  if [ ! -d ~/EZY_ADB/Pull_Files ]; then
-	      mkdir ~/EZY_ADB/Pull_Files
+	      mkdir -p ~/EZY_ADB/Pull_Files
 	  fi 
 	  echo "Enter the file path"
           echo "Example: /sdcard/Pictures/file.png"
@@ -133,7 +215,7 @@ log() {   adb logcat
 ldump() { LOG="$(date +%d%m%y)log.txt"
 
  	  if [ ! -d ~/EZY_ADB/Log ]; then
-	      mkdir ~/EZY_ADB/Log
+	      mkdir -p ~/EZY_ADB/Log
 	  fi 
 	   echo "logcat has been saved to ~/EZY_ADB/Log. press ctrl & c to quit"
 	   adb logcat > $HOME/EZY_ADB/Log/$LOG
@@ -184,7 +266,7 @@ oemu() {   echo "This action will unlock your bootloader."
 }
 
 sdbak()  {  if [ ! -d ~/EZY_ADB/SD_Backup ]; then
-	      mkdir ~/EZY_ADB/SD_Backup
+	      mkdir -p ~/EZY_ADB/SD_Backup
 	  fi 
 	  SD="$(date +%d%m%y).ab"
 	  adb backup -apk -shared -all -f ~/EZY_ADB/SD_Backup/sdbak-$SD
@@ -202,7 +284,7 @@ rest()  {  echo "Enter the file name of your backup file"
 }
 
 scrn() {  if [ ! -d ~/EZY_ADB/ScreenShots ]; then
-	     mkdir ~/EZY_ADB/ScreenShots
+	     mkdir -p ~/EZY_ADB/ScreenShots
 fi
 	     adb shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > ~/EZY_ADB/ScreenShots/screen.png
              if [ -f ~/EZY_ADB/ScreenShots/screen.png ]; then
@@ -216,14 +298,15 @@ fi
     fi
 }
 
-recd() {   
-	   	echo ""
+recd() {   echo ""
 	   	echo "Recording in progress. Press Ctrl and c to stop"
 	   	echo ""
+		echo "The file will be dumped to your sdcard"
 
-		    adb shell screenrecord /sdcard/ScrRecord.mp4
+		RD="$(date +%d%m%y)"
+		    adb shell screenrecord /sdcard/ScrRecord-$RD.mp4
 
-	        echo "The file will be saved in your internal storage"
+	        
            	echo ""
 }
 
@@ -241,88 +324,11 @@ echo ""
 echo "  Fastboot guide by Ricky Divjakovski: http://forum.xda-developers.com/showthread.php?t=2225405"
 echo ""
 echo "  Adb and fastboot for Windows: http://forum.xda-developers.com/showthread.php?t=2317790"
-echo ""
 echo "__________________________________________________________"
 sleep 60s
 }
 
-restart() {
-clear
-printf '\e[8;39;90t'
-echo ""
-echo ""
-echo ""
-echo "                       EZY-ADB "
-echo "__________________________________________________________"
-echo ""
-echo "                 CHOOSE FROM THE MENU"
-echo ""
-echo "__________________________________________________________"
-echo ""
-echo "         1) install adb & fastboot"
-echo "         2) check connection"
-echo ""
-echo "         3) adb pull"
-echo "         4) adb push"
-echo "         5) adb sideload"
-echo "         6) adb shell"
-echo ""
-echo "         7) take logcat"
-echo "         8) Dump log to file"
-echo ""
-echo "         9) reboot"
-echo "         10) reboot recovery"
-echo "         11) reboot bootloader"  
-echo ""
-echo "         12) install apk"
-echo ""
-echo "	 13) unlock bootloader" 
-echo ""
-echo "	       14) backup sdcard"
-echo "	       15) restore sdcard backup"
-echo ""
-echo "         16) take screenshot"
-echo "         17) record screen"
-echo ""
-echo "         18) configure udev rules seperately"
 
-echo "         19) useful links & info"
-echo ""
-echo "         q) quit"
-echo "__________________________________________________________"
-echo ""
-echo ""
-echo ""
-
-read first
-
-	case "$first" in
-
-		 1)    inst ;;
-		 2)    chadb ;;
-		 3)    pull ;;
-		 4)    push ;;
-		 5)    side ;;
-		 6)    shell ;;
-		 7)    log ;;
-		 8)    ldump ;;
-		 9)    reb ;;
-		 10)    rec ;;
-	    	11)    boot ;;
-	        12)    app ;;
-	        13)    oemu ;;
-		14)    sdbak ;;
-		15)    rest ;;
-	  	16)    scrn ;;
-	        17)    recd ;;
-	        18)    udev ;;
-	        19)    stuff ;;
-	        q)     ex ;;
-	  	*)
-			echo "Unknown command: '$first'"
-        ;;
-	esac
-}
 
 while [ "1" = "1" ] ;
 do restart
