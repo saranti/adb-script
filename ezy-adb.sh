@@ -1,5 +1,6 @@
 #!/bin/bash
-#Ezy-Adb (C) 2015  Tom Sarantis (Art-Vanderlay)
+#Ezy-Adb Copyright (C) 2015  Tom Sarantis
+#By Art Vanderlay @xda-developers
 #v1.4
 
 
