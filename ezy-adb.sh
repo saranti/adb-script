@@ -1,5 +1,5 @@
 #!/bin/bash
-#Ezy-Adb by Art-Vanderlay
+#Ezy-Adb (C) 2015  Tom Sarantis (Art-Vanderlay)
 #v1.4
 
 
