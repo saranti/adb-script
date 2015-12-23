@@ -1,7 +1,7 @@
 #!/bin/bash
 #Ezy-Adb Copyright (C) 2015  Tom Sarantis
 #By Art Vanderlay @xda-developers
-#v1.4
+#v1.4.1
 
 
 restart() {
@@ -80,11 +80,6 @@ read first
 
 inst() {
 
-if egrep -qi "elementary OS" /etc/lsb-release; then
-        sudo add-apt-repository ppa:nilarimogard/webupd8
-        sudo apt-get update
-fi
-	
 if egrep -qi "ubuntu|debian|mint" /proc/version; then
 	sudo apt-get install android-tools-adb android-tools-fastboot
 fi
@@ -105,7 +100,12 @@ fi
 
 if egrep -qi "fedora" /proc/version; then
 	sudo dnf install android-tools
-fi
+
+
+elif egrep -qi "elementary OS" /etc/lsb-release; then
+        sudo add-apt-repository ppa:nilarimogard/webupd8
+        sudo apt-get update
+fi	
 
 	echo ""
 	echo "Configure udev rules? [y/n] (recommended)"
